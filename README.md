@@ -41,8 +41,8 @@ A full-stack web application for tracking website visits by country with real-ti
 
 ### 1. Clone the repository
 ```bash
-git clone <repo-url>
-cd visit-track
+git clone https://github.com/snowman7400/Country-Tracker
+cd Country-Tracker
 ```
 
 ### 2. Install dependencies
@@ -255,64 +255,3 @@ docker-compose up --build -d
 2. Set up Redis server
 3. Configure environment variables
 4. Start the services
-
-### Production Considerations
-- Use a production Redis instance
-- Set up proper logging
-- Configure monitoring
-- Set up backup strategies
-- Use HTTPS in production
-
-## Troubleshooting
-
-### Common Issues
-
-#### Redis Connection Failed
-- Ensure Redis server is running
-- Check Redis host and port configuration
-- Verify Redis is accessible from the application
-
-#### Country Validation Fails
-- Check internet connection for external API calls
-- Verify REST Countries API is accessible
-- Check fallback validation is working
-
-#### Frontend Cannot Connect to Backend
-- Verify backend is running on correct port
-- Check CORS configuration
-- Ensure API URL is correct in frontend environment
-
-### Debug Mode
-Enable debug logging by setting:
-```env
-NODE_ENV=development
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
-
-## Support
-
-For issues and questions:
-1. Check the troubleshooting section
-2. Review the logs for error messages
-3. Ensure all prerequisites are installed
-4. Verify environment configuration
-
-## Changelog
-
-### Version 1.0.0
-- Initial release
-- Basic visit tracking functionality
-- Real-time statistics dashboard
-- Country validation with external API
-- Individual and bulk statistics clearing
-- Comprehensive test coverage
-- Docker containerization
-- Production deployment support
