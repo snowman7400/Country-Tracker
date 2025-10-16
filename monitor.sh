@@ -8,7 +8,7 @@ set -e
 API_URL="http://localhost:3000"
 FRONTEND_URL="http://localhost:5173"
 
-echo "🔍 Website Visits Tracker Health Monitor"
+echo "Website Visits Tracker Health Monitor"
 echo "========================================"
 echo ""
 
@@ -23,10 +23,10 @@ check_endpoint() {
     response=$(curl -s -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
     
     if [ "$response" = "$expected_status" ]; then
-        echo "✅ OK ($response)"
+        echo "OK ($response)"
         return 0
     else
-        echo "❌ FAILED ($response)"
+        echo "FAILED ($response)"
         return 1
     fi
 }
@@ -38,7 +38,7 @@ get_response_time() {
 }
 
 # Check all endpoints
-echo "📊 Health Checks:"
+echo "Health Checks:"
 echo "----------------"
 
 # Backend health
@@ -60,7 +60,7 @@ frontend_main=$?
 echo ""
 
 # Performance metrics
-echo "⚡ Performance Metrics:"
+echo "Performance Metrics:"
 echo "----------------------"
 
 if [ $backend_health -eq 0 ]; then
@@ -81,21 +81,21 @@ fi
 echo ""
 
 # Test visit endpoint
-echo "🧪 Testing Visit Endpoint:"
+echo "Testing Visit Endpoint:"
 echo "-------------------------"
 
 visit_response=$(curl -s -X POST "$API_URL/visit/test" 2>/dev/null || echo "")
 if [ -n "$visit_response" ]; then
-    echo "✅ Visit endpoint working"
+    echo "Visit endpoint working"
     echo "Response: $visit_response"
 else
-    echo "❌ Visit endpoint failed"
+    echo "Visit endpoint failed"
 fi
 
 echo ""
 
 # Docker container status
-echo "🐳 Docker Container Status:"
+echo "Docker Container Status:"
 echo "-------------------------"
 
 if command -v docker-compose &> /dev/null; then
@@ -107,7 +107,7 @@ fi
 echo ""
 
 # Overall status
-echo "📈 Overall Status:"
+echo "Overall Status:"
 echo "----------------"
 
 total_checks=4
@@ -119,12 +119,12 @@ passed_checks=0
 [ $frontend_main -eq 0 ] && ((passed_checks++))
 
 if [ $passed_checks -eq $total_checks ]; then
-    echo "🎉 All systems operational!"
+    echo "All systems operational!"
     exit 0
 elif [ $passed_checks -gt 0 ]; then
-    echo "⚠️  Partial system operational ($passed_checks/$total_checks checks passed)"
+    echo "Partial system operational ($passed_checks/$total_checks checks passed)"
     exit 1
 else
-    echo "❌ System not operational"
+    echo "System not operational"
     exit 2
 fi

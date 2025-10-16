@@ -5,7 +5,7 @@
 
 set -e
 
-echo "🧪 Website Visits Tracker - Comprehensive Test Suite"
+echo "Website Visits Tracker - Comprehensive Test Suite"
 echo "=================================================="
 echo ""
 
@@ -24,10 +24,10 @@ run_test() {
     echo -n "Running $test_name... "
     
     if (cd "$test_dir" && eval "$test_command" > /dev/null 2>&1); then
-        echo -e "${GREEN}✅ PASSED${NC}"
+        echo -e "${GREEN}PASSED${NC}"
         return 0
     else
-        echo -e "${RED}❌ FAILED${NC}"
+        echo -e "${RED}FAILED${NC}"
         return 1
     fi
 }
@@ -37,45 +37,45 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-echo "🔍 Checking prerequisites..."
+echo "Checking prerequisites..."
 echo "----------------------------"
 
 # Check Node.js
 if command_exists node; then
-    echo "✅ Node.js: $(node --version)"
+    echo "Node.js: $(node --version)"
 else
-    echo "❌ Node.js not found"
+    echo "Node.js not found"
     exit 1
 fi
 
 # Check npm
 if command_exists npm; then
-    echo "✅ npm: $(npm --version)"
+    echo "npm: $(npm --version)"
 else
-    echo "❌ npm not found"
+    echo "npm not found"
     exit 1
 fi
 
 # Check Redis
 if command_exists redis-cli; then
     if redis-cli ping > /dev/null 2>&1; then
-        echo "✅ Redis: Connected"
+        echo "Redis: Connected"
     else
-        echo "⚠️  Redis: Not running (some tests may fail)"
+        echo "Redis: Not running (some tests may fail)"
     fi
 else
-    echo "⚠️  Redis CLI not found (some tests may fail)"
+    echo "Redis CLI not found (some tests may fail)"
 fi
 
 # Check k6 (for load testing)
 if command_exists k6; then
-    echo "✅ k6: $(k6 version | head -n1)"
+    echo "k6: $(k6 version | head -n1)"
 else
-    echo "⚠️  k6 not found (load tests will be skipped)"
+    echo "k6 not found (load tests will be skipped)"
 fi
 
 echo ""
-echo "📦 Installing dependencies..."
+echo "Installing dependencies..."
 echo "-----------------------------"
 
 # Install backend dependencies
@@ -91,7 +91,7 @@ npm install --silent
 cd ..
 
 echo ""
-echo "🧪 Running Test Suite..."
+echo "Running Test Suite..."
 echo "======================="
 
 # Track test results
@@ -100,7 +100,7 @@ passed_tests=0
 
 # Backend Unit Tests
 echo ""
-echo "📋 Backend Unit Tests:"
+echo "Backend Unit Tests:"
 echo "---------------------"
 total_tests=$((total_tests + 1))
 if run_test "Backend Unit Tests" "npm test" "backend"; then
@@ -109,7 +109,7 @@ fi
 
 # Backend Integration Tests
 echo ""
-echo "🔗 Backend Integration Tests:"
+echo "Backend Integration Tests:"
 echo "----------------------------"
 total_tests=$((total_tests + 1))
 if run_test "Backend Integration Tests" "npm run test:e2e" "backend"; then
@@ -118,7 +118,7 @@ fi
 
 # Frontend Tests
 echo ""
-echo "🎨 Frontend Tests:"
+echo "Frontend Tests:"
 echo "----------------"
 total_tests=$((total_tests + 1))
 if run_test "Frontend Tests" "npm test" "frontend"; then
@@ -127,7 +127,7 @@ fi
 
 # Build Tests
 echo ""
-echo "🏗️ Build Tests:"
+echo "Build Tests:"
 echo "---------------"
 
 # Backend Build
@@ -145,7 +145,7 @@ fi
 # Load Tests (if k6 is available)
 if command_exists k6; then
     echo ""
-    echo "⚡ Load Tests:"
+    echo "Load Tests:"
     echo "-------------"
     total_tests=$((total_tests + 1))
     if run_test "Load Tests" "k6 run loadtest-comprehensive.js" "backend"; then
@@ -153,21 +153,21 @@ if command_exists k6; then
     fi
 else
     echo ""
-    echo "⚠️  Load Tests: Skipped (k6 not available)"
+    echo "Load Tests: Skipped (k6 not available)"
 fi
 
 # Test Results Summary
 echo ""
-echo "📊 Test Results Summary:"
+echo "Test Results Summary:"
 echo "========================"
 echo "Total Tests: $total_tests"
 echo "Passed: $passed_tests"
 echo "Failed: $((total_tests - passed_tests))"
 
 if [ $passed_tests -eq $total_tests ]; then
-    echo -e "${GREEN}🎉 All tests passed!${NC}"
+    echo -e "${GREEN}All tests passed!${NC}"
     exit 0
 else
-    echo -e "${RED}❌ Some tests failed${NC}"
+    echo -e "${RED}Some tests failed${NC}"
     exit 1
 fi
